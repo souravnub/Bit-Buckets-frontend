@@ -4,7 +4,7 @@ export const GlobalStyles = createGlobalStyle`
 
 :root {
     --toastify-color-light : ${({ theme }) => theme.primary_100};
-
+        --toastify-font-family: "Poppins" , 'sans-serif';
     // 32rem ~ 510px 
     --toastify-toast-width : 32rem;
 }

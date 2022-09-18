@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import PasswordField from "../components/PasswordField";
 import {
     InputField,
@@ -16,9 +16,14 @@ import { registerUser } from "../features/auth/authActions";
 import showToast from "../utils/showToast";
 import LoadingButton from "../components/LoadingButton";
 const RegisterPage = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { isError, errorFields, errorsArr, message, isLoading, token } =
         useSelector((store) => store.auth);
+
+    const emailRef = useRef();
+    const passwordRef = useRef();
+    const userNameRef = useRef();
 
     const [email, setEmail] = useState("");
     const [userName, setUserName] = useState("");
@@ -30,25 +35,25 @@ const RegisterPage = () => {
 
     useEffect(() => {
         if (!isLoading) {
-            if (!isError) {
-                localStorage.setItem("BitBucketToken", token);
-                showToast("success", message);
-            } else {
+            if (isError) {
                 if (errorsArr && errorFields) {
                     errorsArr.forEach((err) => {
                         showToast("error", err);
                     });
                     if (errorFields.includes("userName")) {
+                        userNameRef.current.focus();
                         setIsUsernameError(true);
                     } else {
                         setIsUsernameError(false);
                     }
                     if (errorFields.includes("email")) {
+                        emailRef.current.focus();
                         setIsEmailError(true);
                     } else {
                         setIsEmailError(false);
                     }
                     if (errorFields.includes("password")) {
+                        passwordRef.current.firstElementChild.focus();
                         setIsPasswordError(true);
                     } else {
                         setIsPasswordError(false);
@@ -84,6 +89,16 @@ const RegisterPage = () => {
         dispatch(registerUser({ userName, email, password }));
     };
 
+    useEffect(() => {
+        if (token) {
+            navigate("/");
+        }
+    }, [token]);
+
+    useEffect(() => {
+        userNameRef.current.focus();
+    }, []);
+
     return (
         <AuthPageContainer>
             <AuthPageHeader>
@@ -94,6 +109,7 @@ const RegisterPage = () => {
                 <InputFieldContainer>
                     <label htmlFor="username">username</label>
                     <InputField
+                        ref={userNameRef}
                         id="username"
                         type="text"
                         // required={true}
@@ -108,6 +124,7 @@ const RegisterPage = () => {
                 <InputFieldContainer>
                     <label htmlFor="email">email</label>
                     <InputField
+                        ref={emailRef}
                         id="email"
                         type="email"
                         // required={true}
@@ -119,14 +136,19 @@ const RegisterPage = () => {
 
                 <InputFieldContainer>
                     <label htmlFor="password">password</label>
-                    <PasswordField
-                        id="password"
-                        onChange={handleInputChange}
-                        value={password}
-                        style={
-                            isPasswordError ? { borderColor: "#ad0000" } : {}
-                        }
-                    />
+                    {/* have to use a div with a ref .. because when ref passed directly to PasswordField it was throwing an error */}
+                    <div ref={passwordRef}>
+                        <PasswordField
+                            id="password"
+                            onChange={handleInputChange}
+                            value={password}
+                            style={
+                                isPasswordError
+                                    ? { borderColor: "#ad0000" }
+                                    : {}
+                            }
+                        />
+                    </div>
                 </InputFieldContainer>
 
                 <LoadingButton

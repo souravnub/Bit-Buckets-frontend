@@ -17,3 +17,19 @@ export const registerUser = createAsyncThunk(
         }
     }
 );
+
+export const loginUser = createAsyncThunk(
+    "auth/login",
+    async (credentials, { rejectWithValue }) => {
+        try {
+            const res = await axiosClient.post("/auth/login", credentials);
+            return res.data;
+        } catch (err) {
+            const { message, errorsArr, errorFields } = err.response.data;
+            if (errorsArr && errorFields && message) {
+                return rejectWithValue({ message, errorsArr, errorFields });
+            }
+            return rejectWithValue({ message });
+        }
+    }
+);

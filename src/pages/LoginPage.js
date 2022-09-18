@@ -1,7 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import PasswordField from "../components/PasswordField";
-import { PrimaryBtn } from "../components/styled/button.styled";
 import {
     InputField,
     InputFieldContainer,
@@ -12,26 +11,127 @@ import {
     AuthPageHeader,
     AuthPageFooter,
 } from "../components/styled/authPage.styled";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../features/auth/authActions";
+import showToast from "../utils/showToast";
+import LoadingButton from "../components/LoadingButton";
 const LoginPage = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { errorFields, errorsArr, message, isError, isLoading, token } =
+        useSelector((store) => store.auth);
+
+    const emailRef = useRef();
+    const passwordRef = useRef();
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const [isEmailError, setIsEmailError] = useState(false);
+    const [isPasswordError, setIsPasswordError] = useState(false);
+
+    useEffect(() => {
+        if (!isLoading) {
+            if (isError) {
+                if (errorsArr && errorFields) {
+                    errorsArr.forEach((err) => {
+                        showToast("error", err);
+                    });
+                    if (errorFields.includes("email")) {
+                        emailRef.current.focus();
+                        setIsEmailError(true);
+                    } else {
+                        setIsEmailError(false);
+                    }
+                    if (errorFields.includes("password")) {
+                        passwordRef.current.firstElementChild.focus();
+                        setIsPasswordError(true);
+                    } else {
+                        setIsPasswordError(false);
+                    }
+                } else {
+                    showToast("error", message);
+                }
+            }
+        }
+        // eslint-disable-next-line
+    }, [isLoading, isError]);
+
+    const handleInputChange = (e) => {
+        const value = e.target.value;
+
+        switch (e.target.id) {
+            case "email":
+                setIsEmailError(false);
+                return setEmail(value);
+
+            case "password":
+                setIsPasswordError(false);
+                return setPassword(value);
+
+            default:
+                break;
+        }
+    };
+
+    const handleLoginFormSubmit = (e) => {
+        e.preventDefault();
+        dispatch(loginUser({ email, password }));
+    };
+
+    useEffect(() => {
+        emailRef.current.focus();
+        if (token) {
+            navigate("/");
+        }
+    }, []);
+
+    useEffect(() => {
+        if (token) {
+            navigate("/");
+        }
+    }, [token]);
+
     return (
         <AuthPageContainer>
             <AuthPageHeader>
                 <h1>Welcome back</h1>
                 <p>Welcome back! Please enter your details.</p>
             </AuthPageHeader>
-            <AuthPageForm>
+            <AuthPageForm onSubmit={handleLoginFormSubmit}>
                 <InputFieldContainer>
                     <label htmlFor="email">email</label>
-                    <InputField id="email" type="email" required={true} />
+                    <InputField
+                        ref={emailRef}
+                        id="email"
+                        type="email"
+                        onChange={handleInputChange}
+                        style={isEmailError ? { borderColor: "#ad0000" } : {}}
+                    />
                 </InputFieldContainer>
 
-                {/* create a component like passwordInputField ... give option to see the password or hide the password ...  */}
                 <InputFieldContainer>
                     <label htmlFor="password">password</label>
-                    <PasswordField id="password" required={true} />
+                    {/* have to use a div with a ref .. because when ref passed directly to PasswordField it was throwing an error */}
+                    <div ref={passwordRef}>
+                        <PasswordField
+                            id="password"
+                            onChange={handleInputChange}
+                            style={
+                                isPasswordError
+                                    ? { borderColor: "#ad0000" }
+                                    : {}
+                            }
+                        />
+                    </div>
                 </InputFieldContainer>
 
-                <PrimaryBtn type="submit">Sign in</PrimaryBtn>
+                <LoadingButton
+                    type="submit"
+                    isLoading={isLoading}
+                    disabled={isLoading}>
+                    Sign in
+                </LoadingButton>
             </AuthPageForm>
 
             <AuthPageFooter>

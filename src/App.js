@@ -14,13 +14,16 @@ import NotFoundPage from "./pages/NotFoundPage";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import showToast from "./utils/showToast";
+import ProtectedRoute from "./components/ProtectedRoute";
+import HomePage from "./pages/HomePage";
 
 const routes = [
     { path: "/login", element: <LoginPage /> },
     { path: "/register", element: <RegisterPage /> },
     { path: "*", element: <NotFoundPage /> },
 ];
+
+const protectedRoutes = [{ path: "/", element: <HomePage /> }];
 
 function App() {
     const theme = useSelector(getTheme());
@@ -62,18 +65,7 @@ function App() {
                         onClick={handleToggleTheme}>
                         toggleTheme
                     </Button>
-                    <Button
-                        style={{
-                            position: "fixed",
-                            top: "1rem",
-                            left: "1rem",
-                            zIndex: 99,
-                        }}
-                        onClick={() =>
-                            showToast("success", "hello this is me")
-                        }>
-                        showToast
-                    </Button>
+
                     <Router>
                         <Routes>
                             {routes.map((route) => {
@@ -85,6 +77,18 @@ function App() {
                                         element={element}></Route>
                                 );
                             })}
+
+                            <Route element={<ProtectedRoute />}>
+                                {protectedRoutes.map((route) => {
+                                    const { path, element } = route;
+                                    return (
+                                        <Route
+                                            key={path}
+                                            element={element}
+                                            path={path}></Route>
+                                    );
+                                })}
+                            </Route>
                         </Routes>
                     </Router>
                 </Container>
