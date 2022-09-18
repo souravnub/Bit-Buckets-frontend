@@ -12,6 +12,9 @@ export const Button = styled.button`
 
 export const PrimaryBtn = styled.button`
     width: 100%;
+
+    max-width: 20rem;
+    margin-inline: auto;
     margin-top: 0.8rem;
     background-color: ${({ theme }) => theme.btn_bg};
     color: white;

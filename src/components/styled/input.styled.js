@@ -8,6 +8,8 @@ export const InputField = styled.input`
     font-size: 0.9rem;
     padding: 0.5rem;
     width: 100%;
+
+    transition: border-color 150ms ease;
 `;
 
 export const InputFieldContainer = styled.div`

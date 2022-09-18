@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import PasswordField from "../components/PasswordField";
-import { PrimaryBtn } from "../components/styled/button.styled";
 import {
     InputField,
     InputFieldContainer,
@@ -12,24 +11,69 @@ import {
     AuthPageHeader,
     AuthPageFooter,
 } from "../components/styled/authPage.styled";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../features/auth/authActions";
+import showToast from "../utils/showToast";
+import LoadingButton from "../components/LoadingButton";
 const RegisterPage = () => {
     const dispatch = useDispatch();
+    const { isError, errorFields, errorsArr, message, isLoading, token } =
+        useSelector((store) => store.auth);
 
     const [email, setEmail] = useState("");
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
 
+    const [isEmailError, setIsEmailError] = useState(false);
+    const [isUsernameError, setIsUsernameError] = useState(false);
+    const [isPasswordError, setIsPasswordError] = useState(false);
+
+    useEffect(() => {
+        if (!isLoading) {
+            if (!isError) {
+                localStorage.setItem("BitBucketToken", token);
+                showToast("success", message);
+            } else {
+                if (errorsArr && errorFields) {
+                    errorsArr.forEach((err) => {
+                        showToast("error", err);
+                    });
+                    if (errorFields.includes("userName")) {
+                        setIsUsernameError(true);
+                    } else {
+                        setIsUsernameError(false);
+                    }
+                    if (errorFields.includes("email")) {
+                        setIsEmailError(true);
+                    } else {
+                        setIsEmailError(false);
+                    }
+                    if (errorFields.includes("password")) {
+                        setIsPasswordError(true);
+                    } else {
+                        setIsPasswordError(false);
+                    }
+                } else {
+                    showToast("error", message);
+                }
+            }
+        }
+        // eslint-disable-next-line
+    }, [isLoading, isError]);
+
     const handleInputChange = (e) => {
         const value = e.target.value;
         switch (e.target.id) {
             case "username":
+                setIsUsernameError(false);
                 return setUserName(value);
             case "password":
+                setIsPasswordError(false);
                 return setPassword(value);
             case "email":
+                setIsEmailError(false);
                 return setEmail(value);
+
             default:
                 break;
         }
@@ -38,7 +82,6 @@ const RegisterPage = () => {
     const handleFormSubmit = (e) => {
         e.preventDefault();
         dispatch(registerUser({ userName, email, password }));
-        console.log(email, userName, password);
     };
 
     return (
@@ -56,6 +99,9 @@ const RegisterPage = () => {
                         // required={true}
                         onChange={handleInputChange}
                         value={userName}
+                        style={
+                            isUsernameError ? { borderColor: "#ad0000" } : {}
+                        }
                     />
                 </InputFieldContainer>
 
@@ -64,9 +110,10 @@ const RegisterPage = () => {
                     <InputField
                         id="email"
                         type="email"
-                        required={true}
+                        // required={true}
                         onChange={handleInputChange}
                         value={email}
+                        style={isEmailError ? { borderColor: "#ad0000" } : {}}
                     />
                 </InputFieldContainer>
 
@@ -74,13 +121,20 @@ const RegisterPage = () => {
                     <label htmlFor="password">password</label>
                     <PasswordField
                         id="password"
-                        required={true}
                         onChange={handleInputChange}
                         value={password}
+                        style={
+                            isPasswordError ? { borderColor: "#ad0000" } : {}
+                        }
                     />
                 </InputFieldContainer>
 
-                <PrimaryBtn type="submit">Register</PrimaryBtn>
+                <LoadingButton
+                    type="submit"
+                    isLoading={isLoading}
+                    disabled={isLoading}>
+                    Register
+                </LoadingButton>
             </AuthPageForm>
 
             <AuthPageFooter>

@@ -12,6 +12,10 @@ import { Button } from "./components/styled/button.styled";
 import { GlobalStyles } from "./components/styled/GlobalStyles.styled";
 import NotFoundPage from "./pages/NotFoundPage";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import showToast from "./utils/showToast";
+
 const routes = [
     { path: "/login", element: <LoginPage /> },
     { path: "/register", element: <RegisterPage /> },
@@ -29,6 +33,25 @@ function App() {
         <ThemeProvider theme={theme.themeProps}>
             <GlobalStyles />
             <Page>
+                {/* not setting theme in ToastContainer because it was causing some issues ... solution : let the theme be default ,i.e, light ... hence toast's backgorund color will always be toastify-light-theme color of the css in the root and we will switch that color to the desired color of the theme */}
+                <ToastContainer
+                    position="bottom-center"
+                    autoClose={3500}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    limit={4}
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "0.5rem",
+                        paddingInline: ".5rem",
+                    }}
+                />
                 <Container>
                     <Button
                         style={{
@@ -38,6 +61,18 @@ function App() {
                         }}
                         onClick={handleToggleTheme}>
                         toggleTheme
+                    </Button>
+                    <Button
+                        style={{
+                            position: "fixed",
+                            top: "1rem",
+                            left: "1rem",
+                            zIndex: 99,
+                        }}
+                        onClick={() =>
+                            showToast("success", "hello this is me")
+                        }>
+                        showToast
                     </Button>
                     <Router>
                         <Routes>

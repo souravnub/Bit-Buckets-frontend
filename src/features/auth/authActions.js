@@ -5,14 +5,15 @@ export const registerUser = createAsyncThunk(
     "auth/register",
     async (credentials, { rejectWithValue }) => {
         try {
-            await axiosClient.post("/auth/register", credentials);
+            const res = await axiosClient.post("/auth/register", credentials);
+            return res.data;
         } catch (err) {
             console.log(err);
-            if (err.response.data.message) {
-                rejectWithValue(err.response.data.message);
-            } else {
-                rejectWithValue(err.message);
+            const { message, errorsArr, errorFields } = err.response.data;
+            if (errorsArr && errorFields && message) {
+                return rejectWithValue({ message, errorsArr, errorFields });
             }
+            return rejectWithValue({ message });
         }
     }
 );

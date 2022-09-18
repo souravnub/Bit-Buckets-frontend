@@ -22,7 +22,7 @@ const lightThemeColors = {
 };
 const darkThemeColors = {
     primary: "#030303",
-    primary_100: "#080808",
+    primary_100: "#121212",
     primary_200: "#0f0f0f",
     primary_300: "#171717",
     primary_400: "#212121",

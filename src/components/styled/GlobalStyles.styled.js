@@ -2,6 +2,13 @@ import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
 
+:root {
+    --toastify-color-light : ${({ theme }) => theme.primary_100};
+
+    // 32rem ~ 510px 
+    --toastify-toast-width : 32rem;
+}
+
 *,
 *::before,
 *::after {
