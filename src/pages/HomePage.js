@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import PrimaryLink from "../components/PrimaryLink";
 
 const HomePage = () => {

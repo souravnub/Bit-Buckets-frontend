@@ -16,6 +16,9 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProtectedRoute from "./components/ProtectedRoute";
 import HomePage from "./pages/HomePage";
+import { useEffect } from "react";
+import { getUserInfo } from "./features/auth/authActions";
+import { logout } from "./features/auth/authSlice";
 
 const routes = [
     { path: "/login", element: <LoginPage /> },
@@ -28,9 +31,18 @@ const protectedRoutes = [{ path: "/", element: <HomePage /> }];
 function App() {
     const theme = useSelector(getTheme());
     const dispatch = useDispatch();
+    const { token } = useSelector((store) => store.auth);
     const handleToggleTheme = () => {
         dispatch(invertTheme());
     };
+
+    useEffect(() => {
+        if (token) {
+            dispatch(getUserInfo());
+            console.log("token change");
+        }
+        // eslint-disable-next-line
+    }, [token]);
 
     return (
         <ThemeProvider theme={theme.themeProps}>
@@ -64,6 +76,16 @@ function App() {
                         }}
                         onClick={handleToggleTheme}>
                         toggleTheme
+                    </Button>
+
+                    <Button
+                        style={{
+                            position: "fixed",
+                            top: "1rem",
+                            left: "50%",
+                        }}
+                        onClick={() => dispatch(logout())}>
+                        logout
                     </Button>
 
                     <Router>

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import showToast from "../../utils/showToast";
-import { loginUser, registerUser } from "./authActions";
+import { getUserInfo, loginUser, registerUser } from "./authActions";
 
 const initialState = {
     token: localStorage.getItem("BitBucketsUserToken") || null,
@@ -15,6 +15,14 @@ const initialState = {
 const authSlice = createSlice({
     name: "auth",
     initialState,
+    reducers: {
+        logout: (state) => {
+            showToast("success", "Logged out successfully");
+            state.user = {};
+            state.token = null;
+            localStorage.removeItem("BitBucketsUserToken");
+        },
+    },
     extraReducers: {
         [registerUser.pending]: (state) => {
             state.isLoading = true;
@@ -59,7 +67,24 @@ const authSlice = createSlice({
             state.errorFields = payload.errorFields;
             state.errorsArr = payload.errorsArr;
         },
+        [getUserInfo.pending]: (state) => {
+            state.isLoading = true;
+            state.isError = false;
+        },
+        [getUserInfo.fulfilled]: (state, { payload }) => {
+            state.isLoading = false;
+            state.isError = false;
+
+            state.user = payload.user;
+            state.message = payload.message;
+        },
+        [getUserInfo.rejected]: (state, { payload }) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.error = payload.message;
+        },
     },
 });
 
+export const { logout } = authSlice.actions;
 export default authSlice.reducer;

@@ -5,7 +5,7 @@ export const registerUser = createAsyncThunk(
     "auth/register",
     async (credentials, { rejectWithValue }) => {
         try {
-            const res = await axiosClient.post("/auth/register", credentials);
+            const res = await axiosClient.post("auth/register", credentials);
             return res.data;
         } catch (err) {
             console.log(err);
@@ -30,6 +30,21 @@ export const loginUser = createAsyncThunk(
                 return rejectWithValue({ message, errorsArr, errorFields });
             }
             return rejectWithValue({ message });
+        }
+    }
+);
+
+export const getUserInfo = createAsyncThunk(
+    "auth/user",
+    async (props, { rejectWithValue, getState }) => {
+        try {
+            const { auth } = getState();
+            const res = await axiosClient.get("/users/me", {
+                headers: { Authorization: `Bearer ${auth.token}` },
+            });
+            return res.data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
         }
     }
 );
