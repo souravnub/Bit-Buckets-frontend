@@ -1,5 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// default props are the props that are same for both light and dark theme
+const defaultProps = {
+    // 420px
+    mobile: "26.25rem",
+    // 600px
+    tablet: "37.5rem",
+    // 1200px
+    desktop: "75rem",
+};
+
 const lightThemeColors = {
     //1,3,5,9,13,17,23,33,44,68
     primary: "#fcfcfc",
@@ -39,11 +49,13 @@ const lightTheme = {
     backgroundColor: lightThemeColors.primary,
     color: lightThemeColors.primary_1000,
     ...lightThemeColors,
+    ...defaultProps,
 };
 const darkTheme = {
     backgroundColor: darkThemeColors.primary,
     color: darkThemeColors.primary_1000,
     ...darkThemeColors,
+    ...defaultProps,
 };
 
 const initialState = { currentTheme: "dark", themeProps: darkTheme };

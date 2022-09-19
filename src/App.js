@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
+import RegisterPage from "./pages/registerPage/RegisterPage";
 
 import { Button } from "./components/styled/button.styled";
 import { GlobalStyles } from "./components/styled/GlobalStyles.styled";

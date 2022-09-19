@@ -8,7 +8,11 @@ export const AuthPageContainer = styled.div`
     justify-content: center;
     gap: 1.4rem;
 
-    padding-inline: 0.8rem;
+    overflow-x: hidden;
+
+    & > * {
+        padding-inline: 0.8rem;
+    }
 `;
 export const AuthPageForm = styled.form`
     display: flex;
@@ -19,6 +23,15 @@ export const AuthPageForm = styled.form`
         font-size: 0.7rem;
         font-weight: 600;
     }
+
+    & > button:nth-child(1) {
+        display: flex;
+        gap: 0.4rem;
+        font-size: 0.8rem;
+        text-transform: capitalize;
+        font-weight: 500;
+        width: max-content;
+    }
 `;
 export const AuthPageHeader = styled.div`
     display: flex;
@@ -26,11 +39,6 @@ export const AuthPageHeader = styled.div`
     gap: 0.3rem;
     align-items: flex-start;
 
-    h1 {
-        font-size: 1.8rem;
-        font-weight: 500;
-        line-height: 1.15;
-    }
     p {
         opacity: 0.6;
         font-weight: 400;

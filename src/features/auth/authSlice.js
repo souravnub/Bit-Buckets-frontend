@@ -17,10 +17,15 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         logout: (state) => {
-            showToast("success", "Logged out successfully");
-            state.user = {};
-            state.token = null;
-            localStorage.removeItem("BitBucketsUserToken");
+            // if token is not present => already logged out ,,hence cannot logout again
+            if (!state.token) {
+                showToast("error", "Unable to perform logout");
+            } else {
+                showToast("success", "Logged out successfully");
+                state.user = {};
+                state.token = null;
+                localStorage.removeItem("BitBucketsUserToken");
+            }
         },
     },
     extraReducers: {

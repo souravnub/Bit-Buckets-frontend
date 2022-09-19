@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../features/auth/authActions";
 import showToast from "../utils/showToast";
 import LoadingButton from "../components/LoadingButton";
+import { Heading } from "../components/styled/typography.styled";
 const LoginPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -95,7 +96,7 @@ const LoginPage = () => {
     return (
         <AuthPageContainer>
             <AuthPageHeader>
-                <h1>Welcome back</h1>
+                <Heading>Welcome back</Heading>
                 <p>Welcome back! Please enter your details.</p>
             </AuthPageHeader>
             <AuthPageForm onSubmit={handleLoginFormSubmit}>
