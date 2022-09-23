@@ -15,7 +15,8 @@ export const GlobalStyles = createGlobalStyle`
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    color : ${({ theme }) => theme.primary_1000}
+    color : ${({ theme }) => theme.primary_1000};
+    font-size: inherit;
 }
 
 html {
@@ -24,6 +25,7 @@ html {
 
 body {
     font-family: "Poppins", sans-serif;
+    
 }
 
 ul,

@@ -119,11 +119,13 @@ const RegisterPage = () => {
     const handleAvatarSelect = (img) => {
         setProfileImg(img.src);
         // not focusing username input field as it was causing some issues in older mobiles
-        selectAvatarBtnRef.current.focus({ preventScroll: true });
         registerPageContentContainerRef.current.scrollTo(0, 0);
 
-        if (profileImg && profileImg === img.src) {
+        // this is previous profile img
+
+        if (profileImg === img.src) {
             setCurrentSlideIndex(1);
+            selectAvatarBtnRef.current.focus({ preventScroll: true });
         }
     };
 
@@ -145,21 +147,22 @@ const RegisterPage = () => {
                 }
             });
         });
-    }, [currentSlideIndex]);
+    }, []);
+
+    useEffect(() => {
+        if (profileImg) {
+            setTimeout(() => {
+                setCurrentSlideIndex(1);
+                selectAvatarBtnRef.current.focus({ preventScroll: true });
+            }, 350);
+        }
+    }, [profileImg]);
 
     useEffect(() => {
         if (token) {
             navigate("/");
         }
     }, [token]);
-
-    useEffect(() => {
-        if (profileImg) {
-            setTimeout(() => {
-                setCurrentSlideIndex(1);
-            }, 250);
-        }
-    }, [profileImg]);
 
     return (
         <AuthPageContainer>

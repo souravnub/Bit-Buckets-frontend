@@ -32,8 +32,8 @@ const lightThemeColors = {
 };
 const darkThemeColors = {
     primary: "#030303",
-    primary_100: "#121212",
-    primary_200: "#0f0f0f",
+    primary_100: "#0f0f0f",
+    primary_200: "#121212",
     primary_300: "#171717",
     primary_400: "#212121",
     primary_500: "#2b2b2b",
@@ -58,7 +58,30 @@ const darkTheme = {
     ...defaultProps,
 };
 
-const initialState = { currentTheme: "dark", themeProps: darkTheme };
+const setInitialState = () => {
+    let themeObj;
+    const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const savedTheme = localStorage.getItem("BitBucketsTheme");
+    console.log(savedTheme);
+    if (savedTheme) {
+        if (savedTheme === "light") {
+            themeObj = { currentTheme: "light", themeProps: lightTheme };
+        } else {
+            themeObj = { currentTheme: "dark", themeProps: darkTheme };
+        }
+    } else {
+        if (darkThemeMq.matches) {
+            themeObj = { currentTheme: "dark", themeProps: darkTheme };
+        } else {
+            themeObj = { currentTheme: "light", themeProps: lightTheme };
+        }
+    }
+
+    return themeObj;
+};
+
+const initialState = setInitialState;
 
 const themeSlice = createSlice({
     name: "theme",
@@ -66,9 +89,11 @@ const themeSlice = createSlice({
     reducers: {
         invertTheme: (state) => {
             if (state.currentTheme === "dark") {
+                localStorage.setItem("BitBucketsTheme", "light");
                 state.currentTheme = "light";
                 state.themeProps = lightTheme;
             } else {
+                localStorage.setItem("BitBucketsTheme", "dark");
                 state.currentTheme = "dark";
                 state.themeProps = darkTheme;
             }

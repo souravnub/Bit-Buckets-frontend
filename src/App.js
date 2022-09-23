@@ -19,6 +19,7 @@ import HomePage from "./pages/HomePage";
 import { useEffect } from "react";
 import { getUserInfo } from "./features/auth/authActions";
 import { logout } from "./features/auth/authSlice";
+import FooterNav from "./components/footer navigation/FooterNav";
 
 const routes = [
     { path: "/login", element: <LoginPage /> },
@@ -112,6 +113,7 @@ function App() {
                                 })}
                             </Route>
                         </Routes>
+                        <FooterNav />
                     </Router>
                 </Container>
             </Page>
