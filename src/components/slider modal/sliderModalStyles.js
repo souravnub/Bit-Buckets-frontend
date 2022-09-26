@@ -16,8 +16,8 @@ export const Modal = styled(motion.div)`
 export const ModalHead = styled(motion.div)`
     width: 100%;
     font-size: 1.5rem;
-    min-height: 7vh;
-    padding: 0.8rem 1.2rem;
+    min-height: max(7vh, 3rem);
+    padding: 0.8rem 0;
     border-radius: 20px 20px 0 0;
     cursor: grab;
 
@@ -36,11 +36,11 @@ export const ModalHead = styled(motion.div)`
         opacity: 0.1;
     }
 
-    svg {
+    & > svg {
         position: absolute;
         left: 50%;
         transform: translateX(-50%) scaleX(1.7);
-        top: 0.1rem;
+        top: 0rem;
         path {
             color: ${({ theme }) => theme.primary_1000};
             opacity: 0.13;

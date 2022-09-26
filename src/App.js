@@ -20,19 +20,26 @@ import { useEffect } from "react";
 import { getUserInfo } from "./features/auth/authActions";
 import { logout } from "./features/auth/authSlice";
 import FooterNav from "./components/footer navigation/FooterNav";
+import { AnimatePresence } from "framer-motion";
+import AccountSettingsModal from "./components/sider modals/AccountSettingsModal";
+import MainPageModal from "./components/sider modals/main page modal/MainPageModal";
 
 const routes = [
     { path: "/login", element: <LoginPage /> },
     { path: "/register", element: <RegisterPage /> },
     { path: "*", element: <NotFoundPage /> },
+    { path: "/", element: <HomePage /> },
 ];
 
-const protectedRoutes = [{ path: "/", element: <HomePage /> }];
+const protectedRoutes = [];
 
 function App() {
     const theme = useSelector(getTheme());
     const dispatch = useDispatch();
     const { token } = useSelector((store) => store.auth);
+    const { isMainPageModalOpen, isAccountSettingsModalOpen } = useSelector(
+        (store) => store.modals
+    );
     const handleToggleTheme = () => {
         dispatch(invertTheme());
     };
@@ -69,6 +76,15 @@ function App() {
                     }}
                 />
                 <Container>
+                    <AnimatePresence>
+                        {isMainPageModalOpen && (
+                            <MainPageModal key="MainPageModal" />
+                        )}
+                        {isAccountSettingsModalOpen && (
+                            <AccountSettingsModal key="userInfoModal" />
+                        )}
+                    </AnimatePresence>
+
                     <Button
                         style={{
                             position: "fixed",

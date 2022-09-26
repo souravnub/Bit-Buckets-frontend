@@ -3,7 +3,8 @@ import showToast from "../../utils/showToast";
 import { getUserInfo, loginUser, registerUser } from "./authActions";
 
 const initialState = {
-    token: localStorage.getItem("BitBucketsUserToken") || null,
+    // token : localStorage.getItem('BitBucketsUserToken') || null
+    token: localStorage.getItem("BitBucketsUserToken") || "sdf",
     user: {},
     isError: false,
     message: null,

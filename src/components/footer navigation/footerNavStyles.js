@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
 export const FooterNavContainer = styled.nav`
-    font-size: 1.4rem;
+    font-size: 1.47rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    padding: 1rem 1.4rem;
+    padding: 0.6rem 1.4rem;
     max-width: 50rem;
     margin-inline: auto;
 
@@ -18,7 +18,6 @@ export const FooterNavContainer = styled.nav`
 
     button,
     a {
-        background-color: ${({ theme }) => theme.primary_300};
         display: grid;
         place-items: center;
         padding: 0.3rem;

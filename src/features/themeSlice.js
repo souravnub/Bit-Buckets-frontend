@@ -8,6 +8,12 @@ const defaultProps = {
     tablet: "37.5rem",
     // 1200px
     desktop: "75rem",
+
+    padding_xs: ".2rem",
+    padding_sm: ".5rem",
+    padding_md: ".9rem",
+    padding_lg: "1.4rem",
+    padding_xl: "1.92rem",
 };
 
 const lightThemeColors = {
@@ -63,7 +69,6 @@ const setInitialState = () => {
     const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
 
     const savedTheme = localStorage.getItem("BitBucketsTheme");
-    console.log(savedTheme);
     if (savedTheme) {
         if (savedTheme === "light") {
             themeObj = { currentTheme: "light", themeProps: lightTheme };

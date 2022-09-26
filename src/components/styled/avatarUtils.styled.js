@@ -45,3 +45,12 @@ export const SelectAvatarBtnStyled = styled.button`
         aspect-ratio: 1;
     }
 `;
+
+export const Avatar = styled.img`
+    border-radius: 50%;
+    width: 3.3rem;
+    aspect-ratio: 1;
+    display: block;
+
+    object-fit: contain;
+`;

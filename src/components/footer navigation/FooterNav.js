@@ -8,19 +8,17 @@ import { TiGlobe, TiGlobeOutline } from "react-icons/ti";
 import { HiOutlineUserGroup, HiUserGroup } from "react-icons/hi";
 import { IoMenu } from "react-icons/io5";
 import { Container } from "../styled/layout.styled";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { Heading } from "../styled/typography.styled";
-import SliderModal from "../slider modal/SliderModal";
-import { AnimatePresence } from "framer-motion";
+import { toggleMainPageModal } from "../../features/ModalSlice";
 
 const FooterNav = () => {
     const { token } = useSelector((store) => store.auth);
     const { pathname } = useLocation();
+    const dispatch = useDispatch();
 
     const [isGlobalBucketListOpen, setIsGlobalBucketListOpen] = useState(false);
     const [isGlobalUsersListOpen, setIsGlobalUsersListOpen] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         if (pathname === "/global/buckets") {
@@ -42,28 +40,12 @@ const FooterNav = () => {
 
     return (
         <>
-            <AnimatePresence>
-                {isModalOpen && (
-                    <SliderModal
-                        isModalOpen={isModalOpen}
-                        onClose={() => {
-                            if (isModalOpen) {
-                                setIsModalOpen(false);
-                            }
-                        }}>
-                        <Heading>hello world</Heading>
-                        <Heading>hello world</Heading>
-                        <Heading>hello world</Heading>
-                    </SliderModal>
-                )}
-            </AnimatePresence>
-
             <FooterNavStyled>
                 <Container>
                     <FooterNavContainer>
                         <button
                             onClick={() => {
-                                setIsModalOpen(true);
+                                dispatch(toggleMainPageModal("open"));
                             }}>
                             <IoMenu />
                         </button>
