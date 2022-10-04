@@ -3,9 +3,19 @@ import { BodyOverlay, Modal, ModalBody, ModalHead } from "./sliderModalStyles";
 import { BsDashLg } from "react-icons/bs";
 import { useSelector } from "react-redux";
 
-const SliderModal = ({ children, onClose, showFull, zIndex, headContent }) => {
+const SliderModal = ({
+    children,
+    onClose,
+    showFull,
+    zIndex,
+    headContent,
+    showSeperation = true,
+}) => {
     const { themeProps } = useSelector((store) => store.theme);
     const modalStates = useSelector((store) => store.modals);
+
+    const modalRef = useRef();
+    const modalHeadRef = useRef();
 
     const [isFullModalShown, setIsFullModalShown] = useState(showFull || false);
     const [openedModalsCount, setOpenModalsCount] = useState(0);
@@ -14,34 +24,25 @@ const SliderModal = ({ children, onClose, showFull, zIndex, headContent }) => {
         const offsetY = info.offset.y;
         if (offsetY <= -40 && !isFullModalShown) {
             setIsFullModalShown(true);
-        } else if (isFullModalShown && offsetY >= 10) {
+        } else if (isFullModalShown && offsetY >= 50) {
             setIsFullModalShown(false);
         }
     };
-    const areMultipleModalsOpen = () => {
-        let modalStatesArr = [];
+
+    useEffect(() => {
+        let count = 0;
         for (const modal in modalStates) {
             const state = modalStates[modal];
-            modalStatesArr.push(state);
-        }
-        let count = 0;
-        modalStatesArr.forEach((state) => {
             if (state) {
                 count++;
             }
-        });
-        return setOpenModalsCount(count);
-    };
-
-    useEffect(() => {
-        document.body.style.overflow = "hidden";
-        return () => {
+        }
+        if (count >= 1) {
+            document.body.style.overflow = "hidden";
+        } else {
             document.body.style.overflow = "auto";
-        };
-    }, []);
-
-    useEffect(() => {
-        areMultipleModalsOpen();
+        }
+        return setOpenModalsCount(count);
     }, [modalStates]);
 
     return (
@@ -67,25 +68,29 @@ const SliderModal = ({ children, onClose, showFull, zIndex, headContent }) => {
                 }}
             />
             <Modal
+                ref={modalRef}
                 key="modal"
                 drag="y"
-                initial={{ y: "100%", opacity: 0 }}
+                initial={{ y: "100%" }}
                 animate={{
                     y: 0,
                     opacity: 1,
                     ease: "easeOut",
-                    height: isFullModalShown
-                        ? "97vh"
-                        : // for stacking effect of modals
-                          `${70 * (1 / (zIndex / 0.95))}vh`,
+                    height: isFullModalShown ? "97vh" : "70vh",
                 }}
-                exit={{ y: "100%", opacity: 0, ease: "easeIn" }}
+                exit={{ y: "100%", ease: "easeIn" }}
                 dragConstraints={{ top: 0, bottom: 0 }}
                 dragElastic={{ top: 0, bottom: 0.1 }}
                 transition={{ type: "just" }}
                 onDrag={handleShowFullModal}
                 style={{ zIndex: 9999 * zIndex }}>
                 <ModalHead
+                    ref={modalHeadRef}
+                    style={{
+                        borderBottom: showSeperation
+                            ? `2px dotted ${themeProps.primary_400}`
+                            : "none",
+                    }}
                     whileTap={{ backgroundColor: themeProps.primary_200 }}>
                     <BsDashLg />
                     {headContent}

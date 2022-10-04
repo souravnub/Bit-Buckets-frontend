@@ -13,14 +13,20 @@ const defaultProps = {
     padding_sm: ".5rem",
     padding_md: ".9rem",
     padding_lg: "1.4rem",
-    padding_xl: "1.92rem",
+    padding_xl: "2rem",
+
+    fs_xs: ".5rem",
+    fs_sm: ".8rem",
+    fs_md: "1.12rem",
+    fs_lg: "1.5rem",
+    fs_xl: "2rem",
 };
 
 const lightThemeColors = {
     //1,3,5,9,13,17,23,33,44,68
     primary: "#fcfcfc",
     primary_100: "#f7f7f7",
-    primary_200: "#f5f5f5",
+    primary_200: "#eeeeee",
     primary_300: "#e8e8e8",
     primary_400: "#dedede",
     primary_500: "#d4d4d4",
@@ -39,7 +45,7 @@ const lightThemeColors = {
 const darkThemeColors = {
     primary: "#030303",
     primary_100: "#0f0f0f",
-    primary_200: "#121212",
+    primary_200: "#151515",
     primary_300: "#171717",
     primary_400: "#212121",
     primary_500: "#2b2b2b",

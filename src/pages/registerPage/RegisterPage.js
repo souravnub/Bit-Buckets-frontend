@@ -17,7 +17,6 @@ import { Heading } from "../../components/styled/typography.styled";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../features/auth/authActions";
 import showToast from "../../utils/showToast";
-import LoadingButton from "../../components/LoadingButton";
 import { RegisterPageContentContainer } from "./RegisterPage.styled";
 import {
     AvatarsContainer,
@@ -25,6 +24,8 @@ import {
 } from "../../components/styled/avatarUtils.styled";
 import SelectAvatarBtn from "../../components/SelectAvatarBtn";
 import { avatarImages } from "../../utils/avatarImageSources";
+import LoadingPrimaryButton from "../../components/buttons/LoadingPrimaryButton";
+import { resetAuthErrors } from "../../features/auth/authSlice";
 const RegisterPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -78,6 +79,7 @@ const RegisterPage = () => {
                 } else {
                     showToast("error", message);
                 }
+                dispatch(resetAuthErrors());
             }
         }
         // eslint-disable-next-line
@@ -264,12 +266,12 @@ const RegisterPage = () => {
                         </div>
                     </InputFieldContainer>
 
-                    <LoadingButton
-                        type="submit"
+                    <LoadingPrimaryButton
+                        // type="submit"
                         isLoading={isLoading}
                         disabled={isLoading}>
                         Register
-                    </LoadingButton>
+                    </LoadingPrimaryButton>
                 </AuthPageForm>
             </RegisterPageContentContainer>
 

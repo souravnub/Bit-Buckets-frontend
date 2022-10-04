@@ -25,7 +25,6 @@ html {
 
 body {
     font-family: "Poppins", sans-serif;
-    
 }
 
 ul,

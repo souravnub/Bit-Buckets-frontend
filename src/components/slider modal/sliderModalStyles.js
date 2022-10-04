@@ -6,6 +6,8 @@ export const Modal = styled(motion.div)`
     bottom: 0;
     inset-inline: 0;
 
+    overflow: auto;
+
     min-height: 60vh;
     background-color: ${({ theme }) => theme.primary_100};
 
@@ -14,6 +16,9 @@ export const Modal = styled(motion.div)`
 `;
 
 export const ModalHead = styled(motion.div)`
+    position: sticky;
+    z-index: 999;
+    top: -1px;
     width: 100%;
     font-size: 1.5rem;
     min-height: max(7vh, 3rem);
@@ -22,19 +27,6 @@ export const ModalHead = styled(motion.div)`
     cursor: grab;
 
     background-color: ${({ theme }) => theme.primary_100};
-
-    position: relative;
-
-    &::after {
-        content: "";
-
-        position: absolute;
-        bottom: 0;
-        inset-inline: 0;
-        height: 2px;
-        background-color: ${({ theme }) => theme.primary_1000};
-        opacity: 0.1;
-    }
 
     & > svg {
         position: absolute;
@@ -50,9 +42,6 @@ export const ModalHead = styled(motion.div)`
 
 export const ModalBody = styled.div`
     overflow: auto;
-    position: relative;
-
-    max-height: 70vh;
 `;
 
 export const BodyOverlay = styled(motion.div)`

@@ -1,9 +1,9 @@
 import React from "react";
 import { Oval } from "react-loader-spinner";
 import { useSelector } from "react-redux";
-import { PrimaryBtn } from "./styled/button.styled";
+import { PrimaryBtn } from "../styled/button.styled";
 
-const LoadingButton = ({ children, isLoading }) => {
+const LoadingPrimaryButton = ({ children, isLoading }) => {
     const strokeWidth = 5;
     const { themeProps } = useSelector((store) => store.theme);
     return (
@@ -43,4 +43,4 @@ const LoadingButton = ({ children, isLoading }) => {
     );
 };
 
-export default LoadingButton;
+export default LoadingPrimaryButton;

@@ -10,3 +10,9 @@ export const Heading = styled.h1`
     font-weight: ${(props) => props.fontWeight || 500};
     line-height: 1.15;
 `;
+
+export const TextFaded = styled.span`
+    font-size: ${({ fontSize }) => fontSize || "1rem"};
+    font-weight: ${({ fontWeight }) => fontWeight || 500};
+    opacity: ${({ strength }) => 1 - strength || 0.7};
+`;

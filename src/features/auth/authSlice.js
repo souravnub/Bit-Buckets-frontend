@@ -3,8 +3,7 @@ import showToast from "../../utils/showToast";
 import { getUserInfo, loginUser, registerUser } from "./authActions";
 
 const initialState = {
-    // token : localStorage.getItem('BitBucketsUserToken') || null
-    token: localStorage.getItem("BitBucketsUserToken") || "sdf",
+    token: localStorage.getItem("BitBucketsUserToken") || null,
     user: {},
     isError: false,
     message: null,
@@ -27,6 +26,12 @@ const authSlice = createSlice({
                 state.token = null;
                 localStorage.removeItem("BitBucketsUserToken");
             }
+        },
+        resetAuthErrors: (state) => {
+            state.isError = false;
+            state.message = null;
+            state.errorsArr = [];
+            state.errorFields = [];
         },
     },
     extraReducers: {
@@ -92,5 +97,5 @@ const authSlice = createSlice({
     },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, resetAuthErrors } = authSlice.actions;
 export default authSlice.reducer;

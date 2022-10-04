@@ -14,8 +14,9 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../features/auth/authActions";
 import showToast from "../utils/showToast";
-import LoadingButton from "../components/LoadingButton";
 import { Heading } from "../components/styled/typography.styled";
+import LoadingPrimaryButton from "../components/buttons/LoadingPrimaryButton";
+import { resetAuthErrors } from "../features/auth/authSlice";
 const LoginPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -53,6 +54,8 @@ const LoginPage = () => {
                 } else {
                     showToast("error", message);
                 }
+
+                dispatch(resetAuthErrors());
             }
         }
         // eslint-disable-next-line
@@ -127,12 +130,12 @@ const LoginPage = () => {
                     </div>
                 </InputFieldContainer>
 
-                <LoadingButton
-                    type="submit"
+                <LoadingPrimaryButton
+                    // type="submit"
                     isLoading={isLoading}
                     disabled={isLoading}>
                     Sign in
-                </LoadingButton>
+                </LoadingPrimaryButton>
             </AuthPageForm>
 
             <AuthPageFooter>
