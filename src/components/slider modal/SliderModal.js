@@ -69,7 +69,7 @@ const SliderModal = ({
             />
             <Modal
                 ref={modalRef}
-                key="modal"
+                key={`modal${zIndex}`}
                 drag="y"
                 initial={{ y: "100%" }}
                 animate={{
@@ -86,12 +86,20 @@ const SliderModal = ({
                 style={{ zIndex: 9999 * zIndex }}>
                 <ModalHead
                     ref={modalHeadRef}
+                    animate={{
+                        // background was unable to be set to primary_100 initially due to tap animation therefore used animate with duration 0
+                        backgroundColor: themeProps.primary_100,
+                        transition: { duration: 0 },
+                    }}
+                    whileTap={{
+                        backgroundColor: themeProps.primary_300,
+                        transition: { duration: 0.4 },
+                    }}
                     style={{
                         borderBottom: showSeperation
                             ? `2px dotted ${themeProps.primary_400}`
                             : "none",
-                    }}
-                    whileTap={{ backgroundColor: themeProps.primary_200 }}>
+                    }}>
                     <BsDashLg />
                     {headContent}
                 </ModalHead>

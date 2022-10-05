@@ -8,9 +8,12 @@ import {
     MainSettingOptionsContainer,
     SettingOptionButton,
     SettingOptionLink,
+    ThemeToggleSettingOptionDiv,
 } from "./MainPageModalStyles";
 import { toggleAccountSettingsModal } from "../../../features/ModalSlice";
 import { useDispatch } from "react-redux";
+import ThemeToggleButton from "../../buttons/ThemeToggleButton";
+import { invertTheme } from "../../../features/themeSlice";
 
 const settingOptions = [
     {
@@ -64,12 +67,14 @@ const SettingsMenu = () => {
                     </SettingOptionLink>
                 );
             })}
-            <SettingOptionButton>
+            <ThemeToggleSettingOptionDiv>
                 <div>
                     <CgEditContrast />
                 </div>
                 <span>Theme</span>
-            </SettingOptionButton>
+
+                <ThemeToggleButton />
+            </ThemeToggleSettingOptionDiv>
         </MainSettingOptionsContainer>
     );
 };

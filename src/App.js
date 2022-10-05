@@ -31,6 +31,7 @@ import MainPageModal from "./components/sider modals/main page modal/MainPageMod
 import { closeAllModals } from "./features/ModalSlice";
 import AccountInfoModal from "./components/sider modals/account info modal/AccountInfoModal";
 import { getAllBuckets } from "./features/buckets/bucketActions";
+import ThemeToggleButton from "./components/buttons/ThemeToggleButton";
 
 const routes = [
     { path: "/login", element: <LoginPage /> },

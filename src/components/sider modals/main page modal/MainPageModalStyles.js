@@ -138,4 +138,11 @@ export const SettingOptionButton = styled.button`
     }
 `;
 
+export const ThemeToggleSettingOptionDiv = styled(
+    SettingOptionButton.withComponent("div")
+)`
+    & > button {
+        margin-inline-start: auto;
+    }
+`;
 export const SettingOptionLink = SettingOptionButton.withComponent(Link);
