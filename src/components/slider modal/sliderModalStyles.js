@@ -8,7 +8,7 @@ export const Modal = styled(motion.div)`
 
     overflow: auto;
 
-    min-height: 60vh;
+    min-height: 10vh;
     background-color: ${({ theme }) => theme.primary_100};
 
     z-index: 9999;

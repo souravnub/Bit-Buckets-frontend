@@ -34,9 +34,6 @@ export const ProfileImgContainer = styled.div`
     display: flex;
     gap: ${({ theme }) => theme.padding_md};
 
-    img {
-        max-width: 6rem;
-    }
     & > div {
         display: flex;
         flex-direction: column;

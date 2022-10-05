@@ -1,12 +1,6 @@
 import React from "react";
-import PrimaryLink from "../components/PrimaryLink";
-
 const HomePage = () => {
-    return (
-        <div>
-            home page <PrimaryLink to="/register">register</PrimaryLink>
-        </div>
-    );
+    return <div>home page</div>;
 };
 
 export default HomePage;

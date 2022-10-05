@@ -106,26 +106,6 @@ function App() {
                         )}
                     </AnimatePresence>
 
-                    <Button
-                        style={{
-                            position: "fixed",
-                            top: "1rem",
-                            right: "1rem",
-                        }}
-                        onClick={handleToggleTheme}>
-                        toggleTheme
-                    </Button>
-
-                    <Button
-                        style={{
-                            position: "fixed",
-                            top: "1rem",
-                            left: "50%",
-                        }}
-                        onClick={() => dispatch(logout())}>
-                        logout
-                    </Button>
-
                     <Routes>
                         {routes.map((route) => {
                             const { path, element } = route;

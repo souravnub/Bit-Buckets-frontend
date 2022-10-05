@@ -4,6 +4,7 @@ const initialState = {
     isMainPageModalOpen: false,
     isAccountInfoModalOpen: false,
     isAccountSettingsModalOpen: false,
+    isAvatarSelectionModalOpen: false,
 };
 
 const toggleModalState = ({ ref, state, payload }) => {
@@ -36,6 +37,13 @@ const modalSlice = createSlice({
         toggleAcccountInfoModal: (state, { payload }) => {
             toggleModalState({ ref: "isAccountInfoModalOpen", state, payload });
         },
+        toggleAvatarSelectionModal: (state, { payload }) => {
+            toggleModalState({
+                ref: "isAvatarSelectionModalOpen",
+                state,
+                payload,
+            });
+        },
     },
 });
 
@@ -44,5 +52,6 @@ export const {
     toggleMainPageModal,
     toggleAccountSettingsModal,
     toggleAcccountInfoModal,
+    toggleAvatarSelectionModal,
     closeAllModals,
 } = modalSlice.actions;

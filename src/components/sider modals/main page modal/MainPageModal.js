@@ -18,6 +18,7 @@ import { FcApproval } from "react-icons/fc";
 import SettingsMenu from "./SettingsMenu";
 import { logout } from "../../../features/auth/authSlice";
 import { getDate } from "../../../utils/getDateFromISO";
+import { Avatar } from "../../styled/avatarUtils.styled";
 
 const MainPageModal = () => {
     const { isMainPageModalOpen: isModalOpen } = useSelector(
@@ -41,7 +42,7 @@ const MainPageModal = () => {
             <MainPageModalContainer>
                 <MainProfileContainer>
                     <ProfileImgContainer>
-                        <img src={user.profileImg} alt="profile avatar" />
+                        <Avatar src={user.profileImg} alt="profile avatar" />
                         <div>
                             <span>{user.userName}</span>
                             <TextFaded fontSize=".9rem" fontWeight={500}>

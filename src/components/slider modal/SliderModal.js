@@ -9,6 +9,8 @@ const SliderModal = ({
     showFull,
     zIndex,
     headContent,
+    defaultHeight,
+    draggable = true,
     showSeperation = true,
 }) => {
     const { themeProps } = useSelector((store) => store.theme);
@@ -22,6 +24,9 @@ const SliderModal = ({
 
     const handleShowFullModal = (event, info) => {
         const offsetY = info.offset.y;
+        if (!draggable) {
+            return;
+        }
         if (offsetY <= -40 && !isFullModalShown) {
             setIsFullModalShown(true);
         } else if (isFullModalShown && offsetY >= 50) {
@@ -76,11 +81,11 @@ const SliderModal = ({
                     y: 0,
                     opacity: 1,
                     ease: "easeOut",
-                    height: isFullModalShown ? "97vh" : "70vh",
+                    height: isFullModalShown ? "97vh" : defaultHeight || "70vh",
                 }}
                 exit={{ y: "100%", ease: "easeIn" }}
                 dragConstraints={{ top: 0, bottom: 0 }}
-                dragElastic={{ top: 0, bottom: 0.1 }}
+                dragElastic={{ top: draggable ? 0 : 0.05, bottom: 0.1 }}
                 transition={{ type: "just" }}
                 onDrag={handleShowFullModal}
                 style={{ zIndex: 9999 * zIndex }}>
