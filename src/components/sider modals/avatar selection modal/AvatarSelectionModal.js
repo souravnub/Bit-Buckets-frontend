@@ -29,7 +29,7 @@ const AvatarSelectionModal = ({ onSelect, activeAvatar }) => {
                     padding: themeProps.padding_md,
                     paddingBlockEnd: themeProps.padding_xl,
                 }}>
-                {/* avatar btn will be a component not a styled component */}
+                {/* avatar btn is be a component not a styled component */}
 
                 {avatarImages.map((img) => {
                     return (

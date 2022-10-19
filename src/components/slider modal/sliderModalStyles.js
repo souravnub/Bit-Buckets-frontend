@@ -21,7 +21,7 @@ export const ModalHead = styled(motion.div)`
     top: -1px;
     width: 100%;
     font-size: 1.5rem;
-    min-height: max(7vh, 3rem);
+    min-height: max(5vh, 3rem);
     padding: 0.8rem 0;
     border-radius: 20px 20px 0 0;
     cursor: grab;

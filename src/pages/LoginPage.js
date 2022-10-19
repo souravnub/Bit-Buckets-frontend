@@ -16,7 +16,7 @@ import { loginUser } from "../features/auth/authActions";
 import showToast from "../utils/showToast";
 import { Heading } from "../components/styled/typography.styled";
 import LoadingPrimaryButton from "../components/buttons/LoadingPrimaryButton";
-import { resetAuthErrors } from "../features/auth/authSlice";
+import { clearAuthErrors } from "../features/auth/authSlice";
 const LoginPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -55,7 +55,7 @@ const LoginPage = () => {
                     showToast("error", message);
                 }
 
-                dispatch(resetAuthErrors());
+                dispatch(clearAuthErrors());
             }
         }
         // eslint-disable-next-line
@@ -110,7 +110,7 @@ const LoginPage = () => {
                         id="email"
                         type="email"
                         onChange={handleInputChange}
-                        style={isEmailError ? { borderColor: "#ad0000" } : {}}
+                        isError={isEmailError}
                     />
                 </InputFieldContainer>
 
@@ -121,11 +121,7 @@ const LoginPage = () => {
                         <PasswordField
                             id="password"
                             onChange={handleInputChange}
-                            style={
-                                isPasswordError
-                                    ? { borderColor: "#ad0000" }
-                                    : {}
-                            }
+                            isError={isPasswordError}
                         />
                     </div>
                 </InputFieldContainer>

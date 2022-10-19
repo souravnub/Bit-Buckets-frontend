@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 export const MainPageModalContainer = styled.div`
     padding-block-end: ${({ theme }) => theme.padding_xl};
+    padding-block-start: ${({ theme }) => theme.padding_md};
 
     & > button {
         display: flex;

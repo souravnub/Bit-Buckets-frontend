@@ -9,6 +9,8 @@ const PasswordField = ({ onChange, ...props }) => {
         <PasswordFieldContainer>
             <InputField
                 type={isPasswordShown ? "text" : "password"}
+                autocorrect="off"
+                autocapitalize="none"
                 {...props}
                 onChange={onChange}></InputField>
             <button

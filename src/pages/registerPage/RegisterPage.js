@@ -25,7 +25,7 @@ import {
 import SelectAvatarBtn from "../../components/SelectAvatarBtn";
 import { avatarImages } from "../../utils/avatarImageSources";
 import LoadingPrimaryButton from "../../components/buttons/LoadingPrimaryButton";
-import { resetAuthErrors } from "../../features/auth/authSlice";
+import { clearAuthErrors } from "../../features/auth/authSlice";
 const RegisterPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -79,7 +79,7 @@ const RegisterPage = () => {
                 } else {
                     showToast("error", message);
                 }
-                dispatch(resetAuthErrors());
+                dispatch(clearAuthErrors());
             }
         }
         // eslint-disable-next-line
@@ -226,11 +226,7 @@ const RegisterPage = () => {
                             // required={true}
                             onChange={handleInputChange}
                             value={userName}
-                            style={
-                                isUsernameError
-                                    ? { borderColor: "#ad0000" }
-                                    : {}
-                            }
+                            isError={isUsernameError}
                         />
                     </InputFieldContainer>
 
@@ -243,9 +239,7 @@ const RegisterPage = () => {
                             // required={true}
                             onChange={handleInputChange}
                             value={email}
-                            style={
-                                isEmailError ? { borderColor: "#ad0000" } : {}
-                            }
+                            isError={isEmailError}
                         />
                     </InputFieldContainer>
 
@@ -257,11 +251,7 @@ const RegisterPage = () => {
                                 id="password"
                                 onChange={handleInputChange}
                                 value={password}
-                                style={
-                                    isPasswordError
-                                        ? { borderColor: "#ad0000" }
-                                        : {}
-                                }
+                                isError={isPasswordError}
                             />
                         </div>
                     </InputFieldContainer>

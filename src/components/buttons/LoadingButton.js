@@ -10,7 +10,7 @@ const LoadingOvalContainer = styled.div`
     }
 `;
 
-const LoadingButton = ({ children, isLoading, onClick }) => {
+const LoadingButton = ({ children, isLoading, onClick, type }) => {
     const strokeWidth = 5;
     const { themeProps } = useSelector((store) => store.theme);
 
@@ -29,7 +29,8 @@ const LoadingButton = ({ children, isLoading, onClick }) => {
     return (
         <button
             onClick={onClick}
-            // disabled={isLoading}
+            type={type}
+            disabled={isLoading}
             style={{
                 display: "flex",
                 justifyContent: "center",

@@ -47,3 +47,38 @@ export const ChangeAvatarContainer = styled.div`
         border-radius: 50%;
     }
 `;
+
+export const ChangePasswordContainer = styled.div`
+    margin-block: ${({ theme }) => theme.padding_md};
+    display: flex;
+    flex-direction: column;
+    gap: ${({ theme }) => theme.padding_md};
+
+    & > button {
+        display: flex;
+        align-items: center;
+        gap: ${({ theme }) => theme.padding_sm};
+        text-transform: capitalize;
+        font-family: "Poppins";
+        font-size: ${({ theme }) => theme.fs_sm};
+    }
+`;
+
+export const OldPasswordFormContainer = styled.div`
+    display: flex;
+    gap: ${({ theme }) => theme.padding_sm};
+
+    & > div {
+        flex-grow: 1;
+
+        & > div {
+            display: flex;
+            align-items: center;
+            gap: ${({ theme }) => theme.padding_md};
+
+            & > button {
+                font-size: ${({ theme }) => theme.fs_lg};
+            }
+        }
+    }
+`;

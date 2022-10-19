@@ -39,7 +39,22 @@ export const getUserInfo = createAsyncThunk(
     async (props, { rejectWithValue, getState }) => {
         try {
             const { auth } = getState();
-            const res = await axiosClient.get("/users/me", {
+            const res = await axiosClient.get("/auth", {
+                headers: { Authorization: `Bearer ${auth.token}` },
+            });
+            return res.data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const updateUserInfo = createAsyncThunk(
+    "auth/update",
+    async (newUserObj, { rejectWithValue, getState }) => {
+        try {
+            const { auth } = getState();
+            const res = await axiosClient.put("/auth", newUserObj, {
                 headers: { Authorization: `Bearer ${auth.token}` },
             });
             return res.data;

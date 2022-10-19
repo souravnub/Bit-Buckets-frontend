@@ -4,7 +4,9 @@ export const InputField = styled.input`
     background-color: transparent;
     color: ${({ theme }) => theme.primary_1000};
     border-radius: 0.2em;
-    border: 1.8px solid ${({ theme }) => theme.primary_300};
+    border: 1.8px solid;
+    border-color: ${(props) =>
+        props.isError ? "#ad0000" : props.theme.primary_300};
     font-size: 0.9rem;
     padding: 0.5rem;
     width: 100%;

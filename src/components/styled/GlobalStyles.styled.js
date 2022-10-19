@@ -7,6 +7,7 @@ export const GlobalStyles = createGlobalStyle`
         --toastify-font-family: "Poppins" , 'sans-serif';
     // 32rem ~ 510px 
     --toastify-toast-width : 32rem;
+    --toastify-z-index : 999999999999
 }
 
 *,

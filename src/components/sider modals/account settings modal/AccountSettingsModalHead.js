@@ -3,14 +3,13 @@ import { IoIosArrowBack } from "react-icons/io";
 import { TextFaded } from "../../styled/typography.styled";
 import { MdDone } from "react-icons/md";
 import { AccountSetttingsModalHeadContainer } from "./AccountSettingsModalStyles";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleAccountSettingsModal } from "../../../features/ModalSlice";
 import LoadingButton from "../../buttons/LoadingButton";
-import { useState } from "react";
 
-const AccountSettingsModalHead = () => {
+const AccountSettingsModalHead = ({ handleUpdateInfo }) => {
     const dispatch = useDispatch();
-    const [isLoading, setIsLoading] = useState(false);
+    const { isLoading } = useSelector((store) => store.auth);
     return (
         <AccountSetttingsModalHeadContainer>
             <button
@@ -20,12 +19,7 @@ const AccountSettingsModalHead = () => {
 
             <TextFaded>Edit Profile</TextFaded>
 
-            <LoadingButton
-                isLoading={isLoading}
-                onClick={() => {
-                    setIsLoading((prev) => !prev);
-                    console.log("clickedsd");
-                }}>
+            <LoadingButton isLoading={isLoading} onClick={handleUpdateInfo}>
                 <MdDone />
             </LoadingButton>
         </AccountSetttingsModalHeadContainer>

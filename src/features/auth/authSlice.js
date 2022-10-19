@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import showToast from "../../utils/showToast";
-import { getUserInfo, loginUser, registerUser } from "./authActions";
+import {
+    getUserInfo,
+    loginUser,
+    registerUser,
+    updateUserInfo,
+} from "./authActions";
 
 const initialState = {
     token: localStorage.getItem("BitBucketsUserToken") || null,
@@ -27,7 +32,7 @@ const authSlice = createSlice({
                 localStorage.removeItem("BitBucketsUserToken");
             }
         },
-        resetAuthErrors: (state) => {
+        clearAuthErrors: (state) => {
             state.isError = false;
             state.message = null;
             state.errorsArr = [];
@@ -78,6 +83,7 @@ const authSlice = createSlice({
             state.errorFields = payload.errorFields;
             state.errorsArr = payload.errorsArr;
         },
+
         [getUserInfo.pending]: (state) => {
             state.isLoading = true;
             state.isError = false;
@@ -92,10 +98,30 @@ const authSlice = createSlice({
         [getUserInfo.rejected]: (state, { payload }) => {
             state.isLoading = false;
             state.isError = true;
-            state.error = payload.message;
+            state.message = payload.message;
+        },
+        [updateUserInfo.pending]: (state) => {
+            state.isLoading = true;
+            state.isError = false;
+        },
+        [updateUserInfo.fulfilled]: (state, { payload }) => {
+            showToast("success", payload.message);
+            state.isLoading = false;
+            state.isError = false;
+
+            state.user = payload.user;
+            state.message = payload.message;
+        },
+        [updateUserInfo.rejected]: (state, { payload }) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.message = payload.message;
+
+            state.errorFields = payload.errorFields;
+            state.errorsArr = payload.errorsArr;
         },
     },
 });
 
-export const { logout, resetAuthErrors } = authSlice.actions;
+export const { logout, clearAuthErrors } = authSlice.actions;
 export default authSlice.reducer;
