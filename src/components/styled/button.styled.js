@@ -19,8 +19,12 @@ export const PrimaryBtn = styled.button`
     background-color: ${({ theme }) => theme.btn_bg};
     color: white;
     padding: 0.8rem;
-    border-radius: 0.5em;
+    border-radius: 0.3em;
     font-size: 0.96rem;
+
+    &:disabled {
+        opacity: 0.6;
+    }
 `;
 
 export const PrimaryLinkStyle = styled.div`

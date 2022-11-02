@@ -3,12 +3,12 @@ import { Oval } from "react-loader-spinner";
 import { useSelector } from "react-redux";
 import { PrimaryBtn } from "../styled/button.styled";
 
-const LoadingPrimaryButton = ({ children, isLoading }) => {
+const LoadingPrimaryButton = ({ children, isLoading, disabled }) => {
     const strokeWidth = 5;
     const { themeProps } = useSelector((store) => store.theme);
     return (
         <PrimaryBtn
-            disabled={isLoading}
+            disabled={isLoading || disabled}
             style={{
                 display: "grid",
                 placeContent: "center",

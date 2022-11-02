@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import showToast from "../../utils/showToast";
 import {
+    deleteUser,
     getUserInfo,
     loginUser,
     registerUser,
@@ -43,7 +44,6 @@ const authSlice = createSlice({
         [registerUser.pending]: (state) => {
             state.isLoading = true;
             state.isError = false;
-            state.isDuplicateEmailError = false;
         },
         [registerUser.fulfilled]: (state, { payload }) => {
             showToast("success", payload.message);
@@ -58,9 +58,9 @@ const authSlice = createSlice({
         [registerUser.rejected]: (state, { payload }) => {
             state.isError = true;
             state.isLoading = false;
-            state.message = payload.message;
-            state.errorFields = payload.errorFields;
-            state.errorsArr = payload.errorsArr;
+            state.message = payload?.message;
+            state.errorFields = payload?.errorFields;
+            state.errorsArr = payload?.errorsArr;
         },
         [loginUser.pending]: (state) => {
             state.isLoading = true;
@@ -79,9 +79,9 @@ const authSlice = createSlice({
         [loginUser.rejected]: (state, { payload }) => {
             state.isError = true;
             state.isLoading = false;
-            state.message = payload.message;
-            state.errorFields = payload.errorFields;
-            state.errorsArr = payload.errorsArr;
+            state.message = payload?.message || "Some unknown error occured";
+            state.errorFields = payload?.errorFields;
+            state.errorsArr = payload?.errorsArr;
         },
 
         [getUserInfo.pending]: (state) => {
@@ -119,6 +119,25 @@ const authSlice = createSlice({
 
             state.errorFields = payload.errorFields;
             state.errorsArr = payload.errorsArr;
+        },
+        [deleteUser.pending]: (state) => {
+            state.isLoading = true;
+            state.isError = false;
+        },
+        [deleteUser.fulfilled]: (state, { payload }) => {
+            state.isLoading = false;
+            state.isError = false;
+            state.message = payload.message;
+            state.user = {};
+            state.token = null;
+            localStorage.removeItem("BitBucketsUserToken");
+            showToast("success", "Account deleted successfully.");
+        },
+        [deleteUser.rejected]: (state, { payload }) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.error = payload?.message;
+            showToast("error", payload?.message || "Something went wrong");
         },
     },
 });

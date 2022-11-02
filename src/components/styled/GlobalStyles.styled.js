@@ -17,7 +17,6 @@ export const GlobalStyles = createGlobalStyle`
     margin: 0;
     box-sizing: border-box;
     color : ${({ theme }) => theme.primary_1000};
-    font-size: inherit;
 }
 
 html {
@@ -41,6 +40,11 @@ button {
     border-radius: 0;
     border: none;
     cursor: pointer;
+    font-family: inherit;
+
+    & * {
+        pointer-events: none;
+    }
 }
 p {
     line-height: 1.5;
@@ -54,6 +58,11 @@ textarea {
     border: none;
     resize: none;
     outline: none;
+}
+input[type=password]::-ms-reveal,
+input[type=password]::-ms-clear
+{
+    display: none;
 }
 
 `;

@@ -11,15 +11,12 @@ export const MainPageModalContainer = styled.div`
         justify-content: center;
         gap: ${({ theme }) => theme.padding_sm};
         margin-inline: auto;
-        color: red;
-
         font-weight: 500;
-        background-color: ${({ theme }) => theme.primary_400};
         svg {
             font-size: ${({ theme }) => theme.fs_lg};
-            color: red;
+            color: white;
             path {
-                color: red;
+                color: white;
             }
         }
     }
@@ -144,3 +141,31 @@ export const ThemeToggleSettingOptionDiv = styled(
     }
 `;
 export const SettingOptionLink = SettingOptionButton.withComponent(Link);
+
+export const DangerousAreaContainer = styled.div`
+    margin-top: ${({ theme }) => theme.padding_xl};
+    padding-inline: ${({ theme }) => theme.padding_lg};
+    & > span {
+        font-size: 0.9rem;
+        color: ${({ theme }) => theme.primary_900};
+        font-weight: 600;
+    }
+    & > button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: ${({ theme }) => theme.padding_sm};
+        margin-inline: auto;
+        color: red;
+
+        font-weight: 500;
+        background-color: ${({ theme }) => theme.primary_400};
+        svg {
+            font-size: ${({ theme }) => theme.fs_lg};
+            color: red;
+            path {
+                color: red;
+            }
+        }
+    }
+`;

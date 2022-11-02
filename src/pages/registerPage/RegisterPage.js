@@ -77,7 +77,7 @@ const RegisterPage = () => {
                         setIsPasswordError(false);
                     }
                 } else {
-                    showToast("error", message);
+                    showToast("error", message || "Some unknown error occured");
                 }
                 dispatch(clearAuthErrors());
             }

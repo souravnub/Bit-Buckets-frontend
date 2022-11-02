@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { BodyOverlay, Modal, ModalBody, ModalHead } from "./sliderModalStyles";
 import { BsDashLg } from "react-icons/bs";
 import { useSelector } from "react-redux";
+import FocusTrap from "../FocusTrap";
 
 const SliderModal = ({
     children,
@@ -50,6 +51,14 @@ const SliderModal = ({
         return setOpenModalsCount(count);
     }, [modalStates]);
 
+    useEffect(() => {
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+                onClose();
+            }
+        });
+    }, []);
+
     return (
         <>
             <BodyOverlay
@@ -89,26 +98,28 @@ const SliderModal = ({
                 transition={{ type: "just" }}
                 onDrag={handleShowFullModal}
                 style={{ zIndex: 9999 * zIndex }}>
-                <ModalHead
-                    ref={modalHeadRef}
-                    animate={{
-                        // background was unable to be set to primary_100 initially due to tap animation therefore used animate with duration 0
-                        backgroundColor: themeProps.primary_100,
-                        transition: { duration: 0 },
-                    }}
-                    whileTap={{
-                        backgroundColor: themeProps.primary_300,
-                        transition: { duration: 0.4 },
-                    }}
-                    style={{
-                        borderBottom: showSeperation
-                            ? `2px dotted ${themeProps.primary_400}`
-                            : "none",
-                    }}>
-                    <BsDashLg />
-                    {headContent}
-                </ModalHead>
-                <ModalBody>{children}</ModalBody>
+                <FocusTrap>
+                    <ModalHead
+                        ref={modalHeadRef}
+                        animate={{
+                            // background was unable to be set to primary_100 initially due to tap animation therefore used animate with duration 0
+                            backgroundColor: themeProps.primary_100,
+                            transition: { duration: 0 },
+                        }}
+                        whileTap={{
+                            backgroundColor: themeProps.primary_300,
+                            transition: { duration: 0.4 },
+                        }}
+                        style={{
+                            borderBottom: showSeperation
+                                ? `2px dotted ${themeProps.primary_400}`
+                                : "none",
+                        }}>
+                        <BsDashLg />
+                        {headContent}
+                    </ModalHead>
+                    <ModalBody>{children}</ModalBody>
+                </FocusTrap>
             </Modal>
         </>
     );

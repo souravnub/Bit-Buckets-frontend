@@ -2,13 +2,18 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     closeAllModals,
+    toggleConfirmDeleteAccountModal,
     toggleMainPageModal,
 } from "../../../features/ModalSlice";
 import SliderModal from "../../slider modal/SliderModal";
 import { PrimaryBtn } from "../../styled/button.styled";
 import { TextFaded } from "../../styled/typography.styled";
+
 import { IoPower } from "react-icons/io5";
+import { RiDeleteBin6Line } from "react-icons/ri";
+
 import {
+    DangerousAreaContainer,
     MainPageModalContainer,
     MainProfileContainer,
     ProfileDetailsContainer,
@@ -83,6 +88,17 @@ const MainPageModal = () => {
                     Logout
                     <IoPower />
                 </PrimaryBtn>
+
+                <DangerousAreaContainer>
+                    <span>Proceed cautiously</span>
+                    <PrimaryBtn
+                        onClick={() =>
+                            dispatch(toggleConfirmDeleteAccountModal("open"))
+                        }>
+                        Delete Account
+                        <RiDeleteBin6Line />
+                    </PrimaryBtn>
+                </DangerousAreaContainer>
             </MainPageModalContainer>
         </SliderModal>
     );

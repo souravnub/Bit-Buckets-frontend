@@ -32,6 +32,8 @@ import { closeAllModals } from "./features/ModalSlice";
 import AccountInfoModal from "./components/sider modals/account info modal/AccountInfoModal";
 import { getAllBuckets } from "./features/buckets/bucketActions";
 import ThemeToggleButton from "./components/buttons/ThemeToggleButton";
+import PopUpModal from "./components/pop-up modal/PopUpModal";
+import ConfirmDeleteAccountModal from "./components/pop-up modals/confirm delete account modal/ConfirmDeleteAccountModal";
 
 const routes = [
     { path: "/login", element: <LoginPage /> },
@@ -50,11 +52,8 @@ function App() {
         isMainPageModalOpen,
         isAccountSettingsModalOpen,
         isAccountInfoModalOpen,
+        isConfirmDeleteAcocuntModalOpen,
     } = useSelector((store) => store.modals);
-
-    const handleToggleTheme = () => {
-        dispatch(invertTheme());
-    };
 
     useEffect(() => {
         if (token) {
@@ -103,6 +102,11 @@ function App() {
                         )}
                         {isAccountInfoModalOpen && (
                             <AccountInfoModal key="accountInfoModal" />
+                        )}
+
+                        {isConfirmDeleteAcocuntModalOpen && (
+                            // pop-up modal
+                            <ConfirmDeleteAccountModal key="confirmDeleteAccountModal" />
                         )}
                     </AnimatePresence>
 

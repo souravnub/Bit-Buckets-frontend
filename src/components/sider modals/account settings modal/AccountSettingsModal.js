@@ -26,8 +26,6 @@ import showToast from "../../../utils/showToast";
 import { updateUserInfo } from "../../../features/auth/authActions";
 import { clearAuthErrors } from "../../../features/auth/authSlice";
 
-// show erros in the UI for this component
-
 const ChangePasswordComponent = ({
     wannaToChangePassword,
     setWannaToChangePassword,
@@ -49,6 +47,15 @@ const ChangePasswordComponent = ({
     const [isVerifyingUser, setIsVerifyingUser] = useState(false);
     const [isUserVerified, setIsUserVerified] = useState(false);
 
+    useEffect(() => {
+        if (isOldPasswordError) {
+            const oldPasswordInput = oldPasswordRef.current?.querySelector(
+                'input[type="password"]'
+            );
+            oldPasswordInput?.focus();
+        }
+    }, [isOldPasswordError]);
+
     const handleVerifyPassword = async (e) => {
         e.preventDefault();
         if (!oldPassword) {
@@ -66,7 +73,10 @@ const ChangePasswordComponent = ({
         } catch (err) {
             setIsVerifyingUser(false);
             setIsOldPasswordError(true);
-            showToast("error", err.response.data.message);
+            showToast(
+                "error",
+                err.response.data.message || "Some unknown error occured"
+            );
         }
     };
 

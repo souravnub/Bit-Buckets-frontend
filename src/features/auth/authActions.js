@@ -63,3 +63,18 @@ export const updateUserInfo = createAsyncThunk(
         }
     }
 );
+
+export const deleteUser = createAsyncThunk(
+    "auth/delete",
+    async (props, { rejectWidthValue, getState }) => {
+        try {
+            const { auth } = getState();
+            const res = await axiosClient.delete("/auth", {
+                headers: { Authorization: `Bearer ${auth.token}` },
+            });
+            return res.data;
+        } catch (err) {
+            return rejectWidthValue(err.response.data);
+        }
+    }
+);
