@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BodyOverlay, Modal, ModalBody, ModalHead } from "./sliderModalStyles";
 import { BsDashLg } from "react-icons/bs";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import FocusTrap from "../FocusTrap";
+import { closeLatestModal } from "../../features/ModalSlice";
 
 const SliderModal = ({
     children,
@@ -15,10 +16,14 @@ const SliderModal = ({
     showSeperation = true,
 }) => {
     const { themeProps } = useSelector((store) => store.theme);
-    const modalStates = useSelector((store) => store.modals);
+    const { modalStates, modalOpeningStack } = useSelector(
+        (store) => store.modals
+    );
+    const dispatch = useDispatch();
 
     const modalRef = useRef();
     const modalHeadRef = useRef();
+    const bodyOverlayRef = useRef();
 
     const [isFullModalShown, setIsFullModalShown] = useState(showFull || false);
     const [openedModalsCount, setOpenModalsCount] = useState(0);
@@ -36,6 +41,18 @@ const SliderModal = ({
     };
 
     useEffect(() => {
+        const closeCurrentModalHandler = (e) => {
+            if (e.key === "Escape") {
+                dispatch(closeLatestModal());
+            }
+        };
+        document.addEventListener("keydown", closeCurrentModalHandler);
+        return () => {
+            document.removeEventListener("keydown", closeCurrentModalHandler);
+        };
+    }, [modalOpeningStack]);
+
+    useEffect(() => {
         let count = 0;
         for (const modal in modalStates) {
             const state = modalStates[modal];
@@ -51,17 +68,10 @@ const SliderModal = ({
         return setOpenModalsCount(count);
     }, [modalStates]);
 
-    useEffect(() => {
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") {
-                onClose();
-            }
-        });
-    }, []);
-
     return (
         <>
             <BodyOverlay
+                ref={bodyOverlayRef}
                 onClick={onClose}
                 key="body-overlay"
                 initial={{ opacity: 0 }}

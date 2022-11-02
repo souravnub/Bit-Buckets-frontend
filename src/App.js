@@ -53,7 +53,7 @@ function App() {
         isAccountSettingsModalOpen,
         isAccountInfoModalOpen,
         isConfirmDeleteAcocuntModalOpen,
-    } = useSelector((store) => store.modals);
+    } = useSelector((store) => store.modals.modalStates);
 
     useEffect(() => {
         if (token) {

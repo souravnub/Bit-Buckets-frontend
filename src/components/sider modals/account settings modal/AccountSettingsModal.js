@@ -157,7 +157,7 @@ const AccountSettingsModal = () => {
     const {
         isAccountSettingsModalOpen: isModalOpen,
         isAvatarSelectionModalOpen,
-    } = useSelector((store) => store.modals);
+    } = useSelector((store) => store.modals.modalStates);
     const { user, isError, errorsArr, errorFields, isLoading } = useSelector(
         (store) => store.auth
     );

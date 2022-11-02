@@ -10,30 +10,14 @@ import {
 } from "./PopUpModalStyled";
 
 const PopUpModal = ({ title, onClose, children, showHeadBg }) => {
-    const modals = useSelector((store) => store.modals);
+    const modalsStack = useSelector((store) => store.modals.modalStates);
     const { themeProps, currentTheme } = useSelector((store) => store.theme);
     let openModalsCount = 0;
 
-    const escListener = (e) => {
-        if (e.key === "Escape") {
-            onClose();
-        }
-    };
-
     useEffect(() => {
-        let c = 0;
-        for (const i in modals) {
-            if (modals[i]) {
-                c++;
-            }
-        }
-        openModalsCount = c;
-        document.addEventListener("keydown", escListener);
+        openModalsCount = modalsStack.length;
+    }, [modalsStack]);
 
-        return () => {
-            document.removeEventListener("keydown", escListener);
-        };
-    }, []);
     return (
         <>
             <BodyOverlay

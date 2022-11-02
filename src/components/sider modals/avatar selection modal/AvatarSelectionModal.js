@@ -11,7 +11,7 @@ import { toggleAvatarSelectionModal } from "../../../features/ModalSlice";
 
 const AvatarSelectionModal = ({ onSelect, activeAvatar }) => {
     const { isAvatarSelectionModalOpen: isModalOpen } = useSelector(
-        (store) => store.modals
+        (store) => store.modals.modalStates
     );
     const dispatch = useDispatch();
     const { themeProps } = useSelector((store) => store.theme);

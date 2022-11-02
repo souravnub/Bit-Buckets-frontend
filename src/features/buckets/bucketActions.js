@@ -14,7 +14,6 @@ export const getAllBuckets = createAsyncThunk(
             });
             return res.data;
         } catch (err) {
-            console.log(err);
             const { message } = err.response.data;
             return rejectWithValue({ message });
         }

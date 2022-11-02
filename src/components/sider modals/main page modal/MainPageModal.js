@@ -27,7 +27,7 @@ import { Avatar } from "../../styled/avatarUtils.styled";
 
 const MainPageModal = () => {
     const { isMainPageModalOpen: isModalOpen } = useSelector(
-        (store) => store.modals
+        (store) => store.modals.modalStates
     );
     const { user } = useSelector((store) => store.auth);
     const { bucketCount } = useSelector((store) => store.buckets);

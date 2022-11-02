@@ -1,18 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    isMainPageModalOpen: false,
-    isAccountInfoModalOpen: false,
-    isAccountSettingsModalOpen: false,
-    isAvatarSelectionModalOpen: false,
-    isConfirmDeleteAcocuntModalOpen: false,
+    modalStates: {
+        isMainPageModalOpen: false,
+        isAccountInfoModalOpen: false,
+        isAccountSettingsModalOpen: false,
+        isAvatarSelectionModalOpen: false,
+        isConfirmDeleteAcocuntModalOpen: false,
+    },
+    modalOpeningStack: [],
 };
 
 const toggleModalState = ({ ref, state, payload }) => {
     if (payload === "open") {
-        state[ref] = true;
+        state.modalStates[ref] = true;
+        state.modalOpeningStack.push(ref);
     } else {
-        state[ref] = false;
+        state.modalStates[ref] = false;
+        state.modalOpeningStack = state.modalOpeningStack.filter(
+            (modal) => modal !== ref
+        );
     }
 };
 
@@ -21,8 +28,20 @@ const modalSlice = createSlice({
     initialState,
     reducers: {
         closeAllModals: (state) => {
-            for (const key in state) {
-                state[key] = false;
+            for (const key in state.modalStates) {
+                state.modalStates[key] = false;
+            }
+        },
+        closeLatestModal: (state) => {
+            const currentModalToggleRef =
+                state.modalOpeningStack[state.modalOpeningStack.length - 1];
+
+            if (currentModalToggleRef) {
+                toggleModalState({
+                    ref: currentModalToggleRef,
+                    state,
+                    payload: "close",
+                });
             }
         },
         toggleMainPageModal: (state, { payload }) => {
@@ -63,4 +82,5 @@ export const {
     toggleAvatarSelectionModal,
     toggleConfirmDeleteAccountModal,
     closeAllModals,
+    closeLatestModal,
 } = modalSlice.actions;

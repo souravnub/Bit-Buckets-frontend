@@ -8,7 +8,6 @@ export const registerUser = createAsyncThunk(
             const res = await axiosClient.post("auth/register", credentials);
             return res.data;
         } catch (err) {
-            console.log(err);
             const { message, errorsArr, errorFields } = err.response.data;
             if (errorsArr && errorFields && message) {
                 return rejectWithValue({ message, errorsArr, errorFields });

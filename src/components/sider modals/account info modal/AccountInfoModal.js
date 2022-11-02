@@ -22,7 +22,7 @@ const AccountInfoModalHead = () => {
 
 const AccountInfoModal = () => {
     const { isAccountInfoModalOpen: isModalOpen } = useSelector(
-        (store) => store.modals
+        (store) => store.modals.modalStates
     );
     const dispatch = useDispatch();
 
